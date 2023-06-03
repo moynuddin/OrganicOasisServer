@@ -96,7 +96,7 @@ export const forgotPassword = async (req, res) => {
     alreadyUser.email = email || alreadyUser.email;
     alreadyUser.password = password || alreadyUser.password;
 
-    const updatedUser = alreadyUser.save();
+    const updatedUser = await alreadyUser.save();
 
     if (updatedUser) {
       res.status(200).json({ message: "Password reset" });
