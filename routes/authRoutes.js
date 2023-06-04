@@ -6,8 +6,9 @@ import {
   profileUser,
   updateProfile,
   forgotPassword,
+  adminAccess,
 } from "../controllers/authController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { onlyAdmin, protect } from "../middleware/authMiddleware.js";
 
 const authRouter = express.Router();
 
@@ -17,5 +18,6 @@ authRouter.get("/logout", logoutUser);
 authRouter.post("/forgot-password", forgotPassword);
 authRouter.get("/profile", protect, profileUser);
 authRouter.post("/update-profile", protect, updateProfile);
+authRouter.get("/dashboard", protect, onlyAdmin, adminAccess);
 
 export default authRouter;

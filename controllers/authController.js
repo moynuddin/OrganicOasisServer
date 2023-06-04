@@ -4,8 +4,8 @@ import generateToken from "../utils/token.js";
 //Register user
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const register = new Auth({ name, email, password });
+    const { name, email, password, role } = req.body;
+    const register = new Auth({ name, email, password, role });
     const record = await Auth.find({ email });
     const alreadyExists = record[0]?.email;
     if (alreadyExists === email) {
@@ -35,9 +35,9 @@ export const loginUser = async (req, res) => {
     const passwordMatch = await isAuthorized.comparePassword(password);
 
     if (passwordMatch) {
-      const { _id, name, email, createdAt, updatedAt } = isAuthorized;
+      const { _id, name, email, role, createdAt, updatedAt } = isAuthorized;
       generateToken(res, _id);
-      res.status(200).json({ _id, name, email, createdAt, updatedAt });
+      res.status(200).json({ _id, name, email, role, createdAt, updatedAt });
     } else {
       res.status(401).json({ message: "Invalid email or password!" });
     }
@@ -116,4 +116,8 @@ export const logoutUser = async (req, res) => {
   });
 
   res.status(200).json({ message: "User logged out!" });
+};
+
+export const adminAccess = (req, res) => {
+  res.status(200).json({ message: "Access granted!" });
 };

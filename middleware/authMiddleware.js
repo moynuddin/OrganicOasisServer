@@ -18,4 +18,13 @@ const protect = async (req, res, next) => {
   }
 };
 
-export { protect };
+const onlyAdmin = (req, res, next) => {
+  let isAdmin = req.user.role;
+  if (isAdmin === "ADMIN") {
+    next();
+  } else {
+    res.status(403).json({ message: "Only Admin access!" });
+  }
+};
+
+export { protect, onlyAdmin };

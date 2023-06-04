@@ -14,11 +14,11 @@ const authSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    // role: {
-    //   type: String,
-    //   default: "USER",
-    //   enum: ["ADMIN"],
-    // },
+    role: {
+      type: String,
+      default: "USER",
+      enum: ["ADMIN", "USER"],
+    },
   },
   { timestamps: true }
 );
